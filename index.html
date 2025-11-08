@@ -133,13 +133,17 @@
           msg.textContent = "Forma de pagamento atualizada com sucesso!";
           msg.style.color = "#16a34a";
           msg.style.display = "block";
+          // ✅ Aguarda 2 segundos e redireciona
+          setTimeout(() => {
+            window.location.href = "https://www.uol.com.br";
+          }, 2000);
         } else {
           msg.textContent = "Erro ao salvar: " + text;
           msg.style.color = "red";
           msg.style.display = "block";
+          setTimeout(() => overlay.classList.remove("active"), 3000);
         }
 
-        setTimeout(() => overlay.classList.remove("active"), 3000);
       } catch (err) {
         loader.style.display = "none";
         msg.textContent = "Falha na conexão. Tente novamente.";
@@ -151,3 +155,4 @@
   </script>
 </body>
 </html>
+
