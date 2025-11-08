@@ -29,11 +29,16 @@ export async function onRequest(context) {
       body: JSON.stringify(body),
     });
 
-    const text = await res.text();
-    return new Response(`Supabase retornou: ${res.status}\\n${text}`, {
-      status: res.ok ? 200 : 500,
-      headers,
-    });
+const text = await res.text();
+return new Response(
+  JSON.stringify({
+    status: res.status,
+    bodyEnviado: body,
+    respostaSupabase: text
+  }, null, 2),
+  { status: res.ok ? 200 : 500, headers }
+);
+
   } catch (err) {
     return new Response("Erro interno: " + err.message, { status: 500, headers });
   }
