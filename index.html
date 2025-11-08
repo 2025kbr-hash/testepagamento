@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Depuração - Teste Pagamento</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#eef3f7; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+    .container { background:#fff; padding:25px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,.1); width:100%; max-width:480px; }
+    h2 { text-align:center; color:#007bff; margin-top:0; }
+    .debug { background:#fffae6; border:1px solid #ffc107; color:#856404; padding:8px; border-radius:6px; text-align:center; margin-bottom:12px; font-weight:bold; }
+    input { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:1px solid #ccc; }
+    button { background:#007bff; color:#fff; padding:12px; width:100%; border:0; border-radius:6px; font-size:16px; cursor:pointer; }
+    button:hover { background:#0056b3; }
+    .msg { text-align:center; margin-top:12px; font-weight:bold; min-height:22px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="debug">🔍 Modo Depuração Cloudflare Ativo</div>
+    <h2>Formulário de Teste</h2>
+    <form id="pagamentoForm">
+      <input type="text" id="nome" placeholder="Nome completo" required />
+      <input type="text" id="email" placeholder="E-mail" required />
+      <button type="submit">Enviar</button>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+
+  <script>
+  document.getElementById("pagamentoForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    msg.textContent = "Enviando...";
+    msg.style.color = "#333";
+
+    const data = {
+      nome: document.getElementById("nome").value,
+      email: document.getElementById("email").value,
+    };
+
+    try {
+      const res = await fetch("/functions/salvarpagamento", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const text = await res.text();
+      msg.textContent = `STATUS: ${res.status}\n${text}`;
+      msg.style.color = res.ok ? "green" : "red";
+    } catch (err) {
+      msg.textContent = "Erro inesperado: " + err.message;
+      msg.style.color = "red";
+    }
+  });
+  </script>
+</body>
+</html>
