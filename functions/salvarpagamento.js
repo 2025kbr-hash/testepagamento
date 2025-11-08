@@ -30,7 +30,7 @@ export async function onRequest(context) {
     });
 
     const text = await res.text();
-    return new Response(`Supabase retornou: ${res.status}\n${text}`, {
+    return new Response(`Supabase retornou: ${res.status}\\n${text}`, {
       status: res.ok ? 200 : 500,
       headers,
     });
